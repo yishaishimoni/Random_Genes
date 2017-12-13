@@ -8,12 +8,7 @@ source('use_random_sets.r')
 source('cleanData.r')
 source('remove_meta_PCNA.r')
 
-random_subclasses <- TRUE
-pdf_name = 'subclasses.pdf'
-if(random_subclasses){
-  pdf_name = 'random_subclasses.pdf'
-}
-runall <- function(){
+runall <- function(random_subclasses=FALSE, pdf_name='subclasses.pdf'){
   pdf(pdf_name); on.exit(dev.off())
   diseases <- c("ACC", "BLCA", "BRCA", "CESC", "CHOL", "COAD", "COADREAD", 
                 "DLBC", "ESCA", "GBM", "GBMLGG", "HNSC", "KICH", "KIPAN", "KIRC",
@@ -51,3 +46,4 @@ runall <- function(){
 }
 
 runall()
+runall(random_subclasses=TRUE, pdf_name = 'random_subclasses.pdf')

@@ -4,10 +4,9 @@
 
 require(extrafont)
 # plot the results of the subclass analysis
-plot_subclass <- function () {
-  # prefix <- ''; main='PhenoClust'
-  # prefix <- 'random_'; main='random'
-  prefix <- 'clinical_'; main='Grade-based'
+plot_subclass <- function (prefix='', main='PhenoClust') {
+  # prefix <- 'random_'; main <- 'random'
+  # prefix <- 'clinical_'; main <- 'Grade-based'
   width=3.25 * 12 / 8
   height=4.5 * 12 / 8
   load(paste0(prefix,'subclassRatios.Rdata'))
@@ -80,3 +79,6 @@ plot_subclass <- function () {
 }
 
 plot_subclass()
+plot_subclass(prefix='random_', main='random')
+plot_subclass(prefix='clinical_', main='Grade-based')
+
