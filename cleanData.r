@@ -17,12 +17,7 @@ cleanData <- function(dataObj){
   }
   
   dataObj$Surv <- Surv(time = dataObj$merged.dat[,"OS"], event = dataObj$merged.dat[,"status"])
-  rownames(dataObj$merged.dat) <- dataObj$merged.dat[ ,1]
   dataObj$merged.dat <- dataObj$merged.dat[ ,-c(1:3)]
-  
-  # countData <- as.matrix(dataObj$merged.dat)
-  # condition <- factor(rep("a",ncol(countData)))
-  # dds <- DESeqDataSetFromMatrix(countData, DataFrame(condition), ~condition)
   
   informative <- apply(X = dataObj$merged.dat, MARGIN = 2, FUN = function(x){
     if (any(is.na(x)))
