@@ -2,12 +2,13 @@
 # (C) Copyright IBM Corp. 1992, 1993 All Rights Reserved
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 
-# run this on a linux machine
 # load TCGA data
-require(TCGA2STAT)
-source('getTCGA.r') # I had to use a local updated version 
-Sys.setenv(TAR="c:/Cygwin64/bin/tar", R_GZIPCMD="c:/Cygwin64/bin/gzip")
+source('getTCGA.r')
+
 tcgaDir <- '../TCGA/'
+if (!dir.exists(tcgaDir)) {
+  dir.create(tcgaDir, recursive = TRUE)
+}
 
 diseases <- c("ACC", "BLCA", "BRCA", "CESC", "CHOL", "COAD", "COADREAD", 
               "DLBC", "ESCA", "GBM", "GBMLGG", "HNSC", "KICH", "KIPAN", "KIRC",
