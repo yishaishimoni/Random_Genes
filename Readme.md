@@ -1,18 +1,28 @@
-## Code and data related to manuscript
+# Code and data related to manuscript
 
-This is the code that was used for the analysis of TCGA gene-expression (RNA-seq) data, 
+This is an updated version of the code that was used for the analysis of TCGA gene-expression (RNA-seq) data, 
 checking what proportion of random gene sets are significantly predictive of cancer survival.
+See the full paper 
+[Association between expression of random gene sets and survival is evident in multiple cancer types and may be explained by sub-classification](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006026)
+in PLoS Computational Biology. 
 
-The `.Rdata` files are the saved results of this analysis.
-However, it is possible to run the whole analysis from scratch using this code.
-The main script is `testRandomGenes.r`, which creates the significance ratios for all cancer types (with or without PCNA correction), 
-and also plots the resulting p-value distributions to pdf files.
+## Reproduce figures
+The `.Rdata` files are the saved results of the original analysis.
+If you only wish to recreate and perhaps manupulate the figures, 
+all you need is to run the scripts `plotRatios.r` and `plot_subclass.r'.
+This will create multiple pdf files with the results. 
 
-Before running the analysis, make sure to have the TCGA data downloaded into `../TCGA`.
-This can be done using `load_data.r`. Please note that I had to tweak the code a bit for it to run on a windows machine 
-(specifically, I had to change the pointers to `gzip` and `tar`)
-This is a big dataset (and so cannot fit on the git repo) 
-and it is not mine to share (and so cannot sit on the git repo).
+## Rerun analysis
+It is possible to run the whole analysis from scratch using this code.
+However the TCGA data is a big dataset (and so cannot fit on the git repo) 
+and it is not mine to share (and so should not sit on the git repo).
+You can download the data using the script 'load_data.r'.
+
+I will point out that the original analysis was done using a deprecated package and a deprecated TCGA interface.
+Therefore, the exact same data cannot be replicated. 
+The `load_data.r` script downloads the current data and allows runnign the same analysis on this new data.
+Downloading the data take quite some time, and includes both downloading and preprocessing steps.
+This script will populate with new .Rdata files in the TCGA folder that include the expression and survival data of all cancer types.
 
 To re-create the analysis do the following:
 - Run the `testRandomGenes.r` script. This will create the ratio files with and without PCNA correction, and for different sizes of random sets.
@@ -27,12 +37,13 @@ To re-create the analysis do the following:
 - To create the subclass plots run `plot_subclass.r`.
 
 ### Requirements
-The scripts require the package `PhenoGraph`, which can be installed directly from git by installing the `devtools` package and running
+The code requires the packages `survival`, `amap`, `progress`, `gplots`, and `extrafonts`.
+You will also need to install `remotes`, and `BiocManager` to install additional dependencies using 
 ```R
-> devtools::install_github('yishaishimoni/phenoClust')
+remotes::install_github('yishaishimoni/phenoClust')
+BiocManager::install('TCGAbiolinks')
 ```
 
-The code also requires the packages `survival`, `TCGA2STAT`, `amap`, `progress`, `gplots`, and `extrafonts`.
-
-To properly download the data requires both `gzip` and `tar` (at least in the version I had for `TCGA2STAT`).
-These have to be installed separately (e.g. using cygwin) and pointed to in the `load_data.r` script.
+### Install using Dockerfile
+Alternatively, I created a [Dockerfile](https://github.com/yishaishimoni/dockers/tree/main/random_genes/Dockerfile) that will build an environment with Rstudio, all the packages, and the code.
+You will need to build and start the docker container as explained in the [dockerfile's repository](https://github.com/yishaishimoni/dockers/tree/main/random_genes).
