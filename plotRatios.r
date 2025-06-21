@@ -23,7 +23,7 @@ plotRatios <- function(filename){
 }
 
 plotBothRatios <- function(){
-  pdf('signifRatiosPerTumor.pdf', family="Arial", width=10, height = 5); on.exit(dev.off())
+  pdf('signifRatiosPerTumor.pdf', width=10, height = 5); on.exit(dev.off())
   plotRatios('ratios.rData')
   plotRatios('ratios_noPCNA.Rdata')
 }
